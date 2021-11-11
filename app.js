@@ -1,53 +1,67 @@
 #!/usr/bin/env node
 
-const chalk = require('chalk')
-const yargs = require('yargs')
+const chalk = require("chalk");
+const yargs = require("yargs");
 
-const rateLimit = require('./util/ratelimit')
+const rateLimit = require("./util/ratelimit");
 
-yargs.version('1.0.0')
+yargs.version("0.1.2");
 
-yargs.command('$0', 'Default command', {
-    command: 'show',
-    describe: 'Show docker pull rate limit',
-    builder: {
-        'proxy.host': {
-            describe: 'proxy host',
-            type: 'string'
-        },
-        'proxy.port': {
-            describe: 'proxy port',
-            type: 'string'
-        }
+yargs.command("$0", "Default command", {
+  command: "show",
+  describe: "Show docker pull rate limit",
+  builder: {
+    "proxy.host": {
+      describe: "proxy host",
+      type: "string",
     },
-    handler: (argv) => {
-        rateLimit.checkRateLimit(argv, (data) => {
-            if (data.error) {
-                console.log(data.error)
-            } else {
-                const rateLimit = data['ratelimit-remaining'].split(';')[0]
-                let remaining = 'Remaining'
-                let date = 'Date'
-                let limit = 'Limit'
-                let source = 'Source'
+    "proxy.port": {
+      describe: "proxy port",
+      type: "string",
+    },
+  },
+  handler: (argv) => {
+    rateLimit.checkRateLimit(argv).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        const ratelimitRemaining = data["ratelimit-remaining"].split(";")[0];
+        const ratelimitLimit = data["ratelimit-limit"].split(";")[0];
+        const limitHours = data["ratelimit-limit"].split("=")[1] / 3600;
+        const dots = 20;
 
-                if (rateLimit > 0) {
-                    remaining = chalk.greenBright(`${remaining.padEnd(18, '.')}: ${rateLimit}`)
-                } else {
-                    remaining = chalk.red(`${remaining.padEnd(18, '.')}: ${rateLimit}`)
-                }
+        let remaining = "Remaining";
+        let date = "Date";
+        let limit = "Limit";
+        let source = "Source";
 
-                date = chalk.whiteBright(`${date.padEnd(18, '.')}: ${data['date']}`)
-                limit = chalk.whiteBright(`${limit.padEnd(18, '.')}: ${data['ratelimit-limit'].split(';')[0]}/${data['ratelimit-limit'].split('=')[1] / 3600}h`)
-                source = chalk.whiteBright(`${source.padEnd(18, '.')}: ${data['docker-ratelimit-source']}`)
+        if (ratelimitRemaining > 0) {
+          remaining = chalk.greenBright(
+            `${remaining.padEnd(dots, ".")}: ${ratelimitRemaining}`
+          );
+        } else {
+          remaining = chalk.red(
+            `${remaining.padEnd(dots, ".")}: ${ratelimitRemaining}`
+          );
+        }
 
-                console.log(date)
-                console.log(limit)
-                console.log(remaining)
-                console.log(source)
-            }
-        })
-    }
-})
+        date = chalk.whiteBright(`${date.padEnd(dots, ".")}: ${data["date"]}`);
 
-yargs.parse()
+        limit = chalk.whiteBright(
+          `${limit.padEnd(dots, ".")}: ${ratelimitLimit}/${limitHours}h`
+        );
+
+        source = chalk.whiteBright(
+          `${source.padEnd(dots, ".")}: ${data["docker-ratelimit-source"]}`
+        );
+
+        console.log(date);
+        console.log(limit);
+        console.log(remaining);
+        console.log(source);
+      }
+    });
+  },
+});
+
+yargs.parse();
