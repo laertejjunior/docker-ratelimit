@@ -46,7 +46,11 @@
 
 ### Built With
 
-* [Node.js](https://nodejs.org/en/)
+* [node.js](https://nodejs.org/en/)
+* [yargs](https://github.com/yargs/yargs)
+* [inquirer.js](https://github.com/SBoudrias/Inquirer.js)
+* [chalk](https://github.com/chalk/chalk)
+* [axios](https://github.com/axios/axios)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const axios = require("axios-https-proxy-fix");
 const moment = require("moment");
 const package = require("../package.json");
+const HttpsProxyAgent = require('https-proxy-agent');
 
 const url = package.config["token-url"];
 const validationUrl = package.config["validation-url"];
 const fileName = package.config["file-name"];
 const expiresIn = package.config["expires-in"];
 
-
 var proxy = null;
 var auth = null;
+
 
 const checkRateLimit = async (user, argv) => {
   if (argv.proxy) {
@@ -31,11 +31,11 @@ const checkRateLimit = async (user, argv) => {
     headers: {
       Authorization: `Bearer ${data.token}`,
     },
-    proxy: proxy,
   };
 
   try {
-    const response = await axios.head(validationUrl, config);
+
+    const response = await getAxios().head(validationUrl, config);
 
     return response.headers;
   } catch (error) {
@@ -63,7 +63,6 @@ const getToken = async () => {
   let minutes = null;
 
   const token = loadToken();
-
   if (token) {
     issuedAt = moment(token.issued_at);
     minutes = now.diff(issuedAt, "seconds");
@@ -75,7 +74,7 @@ const getToken = async () => {
     };
   } else {
     try {
-      const response = await axios.get(url, { proxy, auth });
+      const response = await getAxios().get(url, { auth });
       
       if(!auth) {
         saveToken(response.data);
@@ -106,6 +105,25 @@ const loadToken = () => {
     return null;
   }
 };
+
+const getProxyConfig = () => {
+   
+    if(!proxy) {
+        return null;
+    }
+
+    return axiosDefaultConfig = {
+        proxy: false,
+        httpsAgent: new HttpsProxyAgent(`${proxy.host}:${proxy.port}`)
+    };
+}
+
+const getAxios = () => {
+    const axiosDefaultConfig = getProxyConfig()
+    const axios = require ('axios').create(axiosDefaultConfig);
+    
+    return axios;
+}
 
 module.exports = {
   checkRateLimit,
