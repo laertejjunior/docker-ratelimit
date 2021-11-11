@@ -57,13 +57,13 @@
 
 * npm
   ```sh
-  npm install npm@latest -g
+  npm i npm@latest -g
   ```
 
 ### Installation
 
    ```sh
-   npm i @laertejjunior/docker-ratelimit
+   npm i @laertejjunior/docker-ratelimit -g
    ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
