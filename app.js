@@ -47,7 +47,7 @@ yargs.command("$0", "Default command", {
       type: "boolean",
     },
     raw: {
-        describe: "show head head return",
+        describe: "show raw head return",
         type: "boolean",
       },
   },
