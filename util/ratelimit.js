@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const yargs = require("yargs");
 const axios = require("axios-https-proxy-fix");
 const moment = require("moment");
 const package = require("../package.json");
@@ -10,16 +9,17 @@ const url = package.config["token-url"];
 const validationUrl = package.config["validation-url"];
 const fileName = package.config["file-name"];
 const expiresIn = package.config["expires-in"];
-const version = package.config["version"];
+
 
 var proxy = null;
+var auth = null;
 
-yargs.version(version);
-
-const checkRateLimit = async (argv) => {
+const checkRateLimit = async (user, argv) => {
   if (argv.proxy) {
     proxy = argv.proxy;
   }
+
+  auth = user;
 
   const data = await getToken();
 
@@ -69,14 +69,17 @@ const getToken = async () => {
     minutes = now.diff(issuedAt, "seconds");
   }
 
-  if (token && minutes < expiresIn) {
+  if (!auth && token && minutes < expiresIn) {
     return {
       token: token.token,
     };
   } else {
     try {
-      const response = await axios.get(url, { proxy });
-      saveToken(response.data);
+      const response = await axios.get(url, { proxy, auth });
+      
+      if(!auth) {
+        saveToken(response.data);
+      }
       return {
         token: response.data.token,
       };

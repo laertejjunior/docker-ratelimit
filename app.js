@@ -2,28 +2,67 @@
 
 const chalk = require("chalk");
 const yargs = require("yargs");
+const inquirer = require("inquirer");
+const package = require("./package.json");
 
 const rateLimit = require("./util/ratelimit");
 
-yargs.version("0.1.2");
+const version = package.config["version"];
+
+yargs.version(version);
+
+const getUserData = async () => {
+    const auth = await inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "username",
+          message: "username",
+        },
+        {
+          type: "password",
+          message: "password",
+          name: "password",
+          mask: "*",
+        },
+      ]);
+
+      return auth;
+}
 
 yargs.command("$0", "Default command", {
   command: "show",
   describe: "Show docker pull rate limit",
   builder: {
     "proxy.host": {
-      describe: "proxy host",
+      describe: "Proxy host",
       type: "string",
     },
     "proxy.port": {
-      describe: "proxy port",
+      describe: "Proxy port",
       type: "string",
     },
+    authenticated: {
+      describe: "Verify authenticated request limits",
+      type: "boolean",
+    },
+    raw: {
+        describe: "show head head return",
+        type: "boolean",
+      },
   },
-  handler: (argv) => {
-    rateLimit.checkRateLimit(argv).then((data) => {
+  handler: async (argv) => {
+    userData = null;
+
+    if(argv.authenticated) {
+        userData = await getUserData();
+    }
+    
+    rateLimit.checkRateLimit(userData, argv).then((data) => {
       if (data.error) {
         console.log(data.error);
+      } else if(argv.raw) {
+        console.log(data);
       } else {
         const ratelimitRemaining = data["ratelimit-remaining"].split(";")[0];
         const ratelimitLimit = data["ratelimit-limit"].split(";")[0];
