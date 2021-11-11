@@ -2,7 +2,7 @@
   "name": "docker-ratelimit",
   "version": "1.0.0",
   "description": "",
-  "author": "joe bag",
+  "author": "Laerte Mercier Junior",
   "license": "ISC",
   "bin": {
     "docker-ratelimit": "./app.js"
