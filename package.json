@@ -1,11 +1,11 @@
 {
-  "name": "docker-ratelimit",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@laertejjunior/docker-ratelimit",
+  "version": "0.1.0",
+  "description": "Checking Your Current Docker Pull Rate Limits and Status",
   "author": "Laerte Mercier Junior",
   "license": "ISC",
   "bin": {
-    "docker-ratelimit": "./app.js"
+    "docker-ratelimit": "app.js"
   },
   "config": {
     "token-url": "https://auth.docker.io/token?service=registry.docker.io&scope=repository:ratelimitpreview/test:pull",
@@ -18,5 +18,29 @@
     "chalk": "^4.1.2",
     "moment": "^2.29.1",
     "yargs": "^17.2.1"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laertejjunior/docker-ratelimit.git"
+  },
+  "keywords": [
+    "docker",
+    "hub",
+    "image",
+    "retention",
+    "rate",
+    "limit",
+    "RateLimit",
+    "RateLimit-Remaining",
+    "Remaining"
+  ],
+  "bugs": {
+    "url": "https://github.com/laertejjunior/docker-ratelimit/issues"
+  },
+  "homepage": "https://github.com/laertejjunior/docker-ratelimit#readme"
 }
