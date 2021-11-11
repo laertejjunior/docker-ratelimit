@@ -74,7 +74,7 @@
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-![Alt Text](images/demo.gif)
+![Alt Text](images/app.gif)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
