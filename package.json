@@ -1,0 +1,22 @@
+{
+  "name": "docker-ratelimit",
+  "version": "1.0.0",
+  "description": "",
+  "author": "joe bag",
+  "license": "ISC",
+  "bin": {
+    "docker-ratelimit": "./app.js"
+  },
+  "config": {
+    "token-url": "https://auth.docker.io/token?service=registry.docker.io&scope=repository:ratelimitpreview/test:pull",
+    "expires-in": "290",
+    "validation-url": "https://registry-1.docker.io/v2/ratelimitpreview/test/manifests/latest",
+    "file-name": "token.json"
+  },
+  "dependencies": {
+    "axios-https-proxy-fix": "^0.17.1",
+    "chalk": "^4.1.2",
+    "moment": "^2.29.1",
+    "yargs": "^17.2.1"
+  }
+}
