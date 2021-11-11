@@ -1,6 +1,6 @@
 {
   "name": "@laertejjunior/docker-ratelimit",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Checking Your Current Docker Pull Rate Limits and Status",
   "author": "Laerte Mercier Junior",
   "license": "ISC",
@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.24.0",
     "chalk": "^4.1.2",
+    "https-proxy-agent": "^5.0.0",
     "inquirer": "^8.2.0",
     "moment": "^2.29.1",
     "yargs": "^17.2.1"
