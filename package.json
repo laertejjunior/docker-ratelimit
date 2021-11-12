@@ -9,9 +9,7 @@
   },
   "config": {
     "token-url": "https://auth.docker.io/token?service=registry.docker.io&scope=repository:ratelimitpreview/test:pull",
-    "expires-in": "290",
-    "validation-url": "https://registry-1.docker.io/v2/ratelimitpreview/test/manifests/latest",
-    "file-name": "token.json"
+    "validation-url": "https://registry-1.docker.io/v2/ratelimitpreview/test/manifests/latest"
   },
   "dependencies": {
     "axios": "^0.24.0",
@@ -19,6 +17,7 @@
     "https-proxy-agent": "^5.0.0",
     "inquirer": "^8.2.0",
     "moment": "^2.29.1",
+    "ora": "^5.4.1",
     "yargs": "^17.2.1"
   },
   "main": "app.js",
