@@ -10,7 +10,7 @@ const version = package["version"];
 
 yargs.version(version);
 
-const getUserData = async () => {
+const getAuth = async () => {
     const auth = await inquirer
         .prompt([
             {
@@ -49,13 +49,13 @@ yargs.command("$0", "Show docker pull rate limit", {
         },
     },
     handler: async (argv) => {
-        userData = null;
+        auth = null;
 
         if (argv.authenticated) {
-            userData = await getUserData();
+            auth = await getAuth();
         }
 
-        rateLimit.checkRateLimit(userData, argv).then((data) => {
+        rateLimit.checkRateLimit(auth, argv).then((data) => {
             if (data.error) {
                 console.log(data.error);
             } else if (argv.raw) {
