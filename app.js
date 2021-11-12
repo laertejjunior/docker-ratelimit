@@ -63,7 +63,6 @@ yargs
       if (argv.authenticated) {
         auth = await getAuth();
       }
-      console.clear();
 
       showResult(auth, argv);
     }

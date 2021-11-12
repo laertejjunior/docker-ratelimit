@@ -1,6 +1,6 @@
 {
   "name": "@laertejjunior/docker-ratelimit",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Checking Your Current Docker Pull Rate Limits and Status",
   "author": "Laerte Mercier Junior",
   "license": "ISC",
