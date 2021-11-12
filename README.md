@@ -51,6 +51,7 @@
 * [inquirer.js](https://github.com/SBoudrias/Inquirer.js)
 * [chalk](https://github.com/chalk/chalk)
 * [axios](https://github.com/axios/axios)
+* [ora](https://github.com/sindresorhus/ora)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
